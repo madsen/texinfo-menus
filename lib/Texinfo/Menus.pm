@@ -7,7 +7,7 @@ package Texinfo::Menus;
 # Update menus and node structure in Texinfo files
 #---------------------------------------------------------------------
 
-require 5.005;
+require 5.006;
 
 use IO::File;
 use strict;
@@ -92,9 +92,8 @@ sub printMasterMenu
     printMenu(@{$children{$node}});
     unless ($No_Detail) {
         print "\n --- The Detailed Node Listing ---\n";
-        local $printKids = 1 unless $No_Comments;
-        my $child;
-        foreach $child (@{$children{$node}}) {
+        local $printKids = ($No_Comments ? 0 : 1);
+        foreach my $child (@{$children{$node}}) {
             if (exists $children{$child}) {
                 print "\n", ($section{$child} || $child), "\n\n";
                 printMenu(@{$children{$child}});
@@ -116,7 +115,7 @@ sub printMasterMenu
 sub printMenu
 {
     print "\@menu\n" unless $masterMenu;
-    foreach $node (@_) {
+    foreach $node (@_) { ## no critic (RequireLexicalLoopIterators)
         printf("%-${descColumn}s%s\n",
                ($title{$node}
                 ? "$menuMark ${title{$node}}: ${node}." # Node with title
@@ -174,7 +173,7 @@ sub readStructure
 
     my $handle   = IO::File->new;
 
-    open($handle,"<$filename") or abort($filename,0,"Unable to open");
+    open($handle,'<', $filename) or abort($filename,0,"Unable to open");
 
   line:
     while (<$handle>) {
@@ -299,8 +298,8 @@ sub writeMenus
     my $inHandle  = IO::File->new;
     my $outHandle = IO::File->new;
 
-    open($inHandle,"<$filename#~") or die "Unable to open $filename#~";
-    open($outHandle,">$filename")  or die "Unable to open $filename";
+    open($inHandle, '<', "$filename#~") or die "Unable to open $filename#~";
+    open($outHandle,'>', $filename)     or die "Unable to open $filename";
 
     my $oldHandle = select $outHandle;
 

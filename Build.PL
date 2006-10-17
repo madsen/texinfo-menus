@@ -19,7 +19,8 @@ my $builder = My_Build->new(
   dist_author        => 'Christopher J. Madsen <cjm@pobox.com>',
   dist_version_from  => 'lib/Texinfo/Menus.pm',
   requires => {
-      'Test::More' => 0,
+       perl         => '5.6.0',
+       'Test::More' => 0,
   },
   script_files       => [ 'bin/up_menus' ],
   create_makefile_pl => 'passthrough',
