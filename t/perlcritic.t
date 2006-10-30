@@ -1,10 +1,11 @@
 #!perl
+#---------------------------------------------------------------------
+# $Id$
+#---------------------------------------------------------------------
 
-if (!require Test::Perl::Critic) {
-    Test::More::plan(
-        skip_all => "Test::Perl::Critic required for testing PBP compliance"
-    );
-}
+use Test::More;
 
-Test::Perl::Critic->import(-verbose => 10);
-Test::Perl::Critic::all_critic_ok();
+eval "use Test::Perl::Critic qw(-verbose 10)";
+plan skip_all => "Test::Perl::Critic required for testing PBP compliance" if $@;
+
+all_critic_ok();
