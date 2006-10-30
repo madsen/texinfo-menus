@@ -1,8 +1,18 @@
 #---------------------------------------------------------------------
-# $Id$
 package Texinfo::Menus;
 #
 # Copyright 1994-2006 Christopher J. Madsen
+#
+# Author: Christopher J. Madsen <cjm@pobox.com>
+# $Id$
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the same terms as Perl itself.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
+# GNU General Public License or the Artistic License for more details.
 #
 # Update menus and node structure in Texinfo files
 #---------------------------------------------------------------------
@@ -342,49 +352,6 @@ sub writeMenus
 } # end writeMenus
 
 #=====================================================================
-# Main Program:
-#=====================================================================
-return 1 if caller;
-
-#---------------------------------------------------------------------
-# Parse arguments:
-#---------------------------------------------------------------------
-require Getopt::Long;
-Getopt::Long->import(2.17); # need version 2.17 or later
-Getopt::Long::Configure(qw(bundling no_getopt_compat));
-
-Getopt::Long::GetOptions(
-    'nocomments|c' => \$No_Comments,
-    'nodetail|d'   => \$No_Detail,
-    'verbose|v'    => \$Verbose,
-    'help|?'       => \&usage,
-    'version'      => \&usage
-) or usage();;
-
-sub usage
-{
-    print "up_menus $VERSION\n";
-    exit if $_[0] and $_[0] eq 'version';
-    print "\n" . <<'';
-Usage:  up_menus [options] file
-  -c, --nocomments  Do not add comments for subsections to the main menu
-  -d, --nodetail    Do not add the detailed node listing to the main menu
-  -v, --verbose     Print warning messages
-  -?, --help        Display this usage information and exit
-      --version     Display version number and exit
-
-    exit;
-} # end sub usage
-
-#---------------------------------------------------------------------
-# Process file:
-#---------------------------------------------------------------------
-
-usage() unless ($#ARGV == 0) and -e $ARGV[0];
-file($ARGV[0]);
-exit;
-
-#=====================================================================
 # Initialize variables:
 #---------------------------------------------------------------------
 BEGIN
@@ -411,6 +378,11 @@ BEGIN
         "subsubheading"       => 4,
     );
 } # end BEGIN
+
+#=====================================================================
+# Package Return Value:
+#=====================================================================
+1;
 
 __END__
 
