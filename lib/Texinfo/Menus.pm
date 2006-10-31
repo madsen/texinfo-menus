@@ -425,7 +425,7 @@ descriptions of subsection and lesser nodes.  (This is useful when the
 subfiles are automatically generated and the descriptions are added by
 hand.)  Use C<<comments => 0>> to prevent this.
 
-=item B<detail>
+=item B<detailed>
 
 Normally, B<update_menus> generates a detailed node listing (consisting of
 the section nodes for each chapter) following the master menu.  Use
