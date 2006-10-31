@@ -22,6 +22,9 @@ Variable names defined here.
 
 Context goes here.
 
+@menu
+@end menu
+
 @include section22.texi
 
 @node Scalar values
