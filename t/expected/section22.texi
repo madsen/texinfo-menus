@@ -1,0 +1,18 @@
+@c $Id: section22.texi 1580 2006-10-31 22:54:08Z cjm $
+
+@node Scalar Context, List Context, Context, Context
+@c DESC: Comments between @node & @section get ignored
+@subsection Scalar context
+
+Stuff about scalar context.
+
+@node List Context, Void Context, Scalar Context, Context
+@subsection List context
+@comment DESC: List context DESC comment
+
+Blah, blah, blah.
+
+@node Void Context, , List Context, Context
+@subsection Void context
+
+...

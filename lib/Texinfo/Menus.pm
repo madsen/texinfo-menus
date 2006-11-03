@@ -414,6 +414,8 @@ A node can supply a menu description with a comment in the form:
 
  @c DESC: Menu description
 
+This comment (if present) must come B<after> the structuring command.
+
 =head1 OPTIONS
 
 =over 5

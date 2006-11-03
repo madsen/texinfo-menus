@@ -22,8 +22,22 @@ my $builder = My_Build->new(
        perl         => '5.6.0',
        'Test::More' => 0,
   },
-  script_files       => [ 'bin/up_menus' ],
+  build_requires     => { FindBin => 0, 'Module::Build' => 0 },
+  dynamic_config     => 1,      # We have the --no-scripts option
+  get_options        => { 'no-scripts' => undef },
+  add_to_cleanup     => [ 't/testing' ],
   create_makefile_pl => 'passthrough',
 );
 
-$builder->create_build_script();
+my $noScripts = $builder->args('no-scripts');
+
+$builder->script_files([ 'bin/up_menus' ]) unless $noScripts;
+
+$builder->create_build_script;
+
+if ($noScripts) {
+  print "The up_menus script will not be installed (installing module only).\n";
+} else {
+  print "The up_menus script will be installed along with the module.\n";
+  print "Run 'perl Build.PL --no-scripts' if you don't want this script installed.\n";
+}
