@@ -10,6 +10,7 @@ README
 t/00.load.t
 t/10.simple.t
 t/20.includes.t
+t/30.verbose.t
 t/expected/chapter1.texi
 t/expected/chapter2.texi
 t/expected/chapter3-4.texi
