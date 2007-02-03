@@ -29,13 +29,14 @@ my $builder = My_Build->new(
   create_makefile_pl => 'passthrough',
 );
 
-my $noScripts = $builder->args('no-scripts');
+my @scripts;
+@scripts = qw(bin/up_menus) unless $builder->args('no-scripts');
 
-$builder->script_files([ 'bin/up_menus' ]) unless $noScripts;
+$builder->script_files(\@scripts);
 
 $builder->create_build_script;
 
-if ($noScripts) {
+unless (@scripts) {
   print "The up_menus script will not be installed (installing module only).\n";
 } else {
   print "The up_menus script will be installed along with the module.\n";
