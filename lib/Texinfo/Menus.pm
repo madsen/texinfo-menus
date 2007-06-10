@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------
 package Texinfo::Menus;
 #
-# Copyright 1994-2006 Christopher J. Madsen
+# Copyright 1994-2007 Christopher J. Madsen
 #
-# Author: Christopher J. Madsen <cjm@pobox.com>
+# Author: Christopher J. Madsen <perl@cjmweb.net>
 # $Id$
 #
 # This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(update_menus);
 
-$VERSION = '1.00';
+$VERSION = '1.01';  # Also update VERSION section in documentation
 
 #=====================================================================
 # Subroutines:
@@ -390,11 +390,17 @@ __END__
 
 Texinfo::Menus - Update node links and menus in Texinfo documents
 
+=head1 VERSION
+
+This document describes Texinfo::Menus version 1.01
+
+
 =head1 SYNOPSIS
 
   use Texinfo::Menus;
 
   update_menus($filename, verbose => 1);
+
 
 =head1 DESCRIPTION
 
@@ -441,10 +447,58 @@ which will be used).  Use C<<verbose => 1>> to enable this.
 
 =back
 
-=head1 BUGS
+=head1 DEPENDENCIES
+
+None.
+
+
+=head1 INCOMPATIBILITIES
+
+None reported.
+
+
+=head1 BUGS AND LIMITATIONS
 
 Texinfo::Menus cannot handle C<@include> inside a menu.
 
+
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
+Christopher J. Madsen  C<< <perl AT cjmweb.net> >>
+
+Please report any bugs or feature requests to
+S<< C<< <bug-Texinfo-Menus AT rt.cpan.org> >> >>,
+or through the web interface at
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Texinfo-Menus>
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 1994-2007 Christopher J. Madsen. All rights reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.

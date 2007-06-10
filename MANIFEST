@@ -20,6 +20,7 @@ t/expected/section22.texi
 t/expected/simple.texi
 t/expected/simpleND.texi
 t/perlcritic.t
+t/pod-coverage.t
 t/pod.t
 t/source/chapter1.texi
 t/source/chapter2.texi

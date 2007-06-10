@@ -1,4 +1,10 @@
-Revision history for Texinfo-Menus
+Revision history for Texinfo::Menus
+
+1.01   9 Jun 2007
+        - added Pod coverage test
+        - updated my email address
+        - cleaned up documentation & build process
+        - no functional changes
 
 1.00   3 Feb 2007
-       Initial public release.
+        - Initial public release
