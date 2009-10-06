@@ -22,7 +22,7 @@ require 5.006;
 use IO::File;
 use strict;
 use vars qw(
-    $descColumn $level $masterMenu $menuMark $node $printKids $section
+    $descColumn $layers $level $masterMenu $menuMark $node $printKids $section
     $No_Comments $No_Detail $Verbose $VERSION
     @parents @ISA @EXPORT
     %children %desc %level %next %prev %section %title %up
@@ -34,6 +34,11 @@ require Exporter;
 @EXPORT = qw(update_menus);
 
 $VERSION = '1.01';  # Also update VERSION section in documentation
+
+our %layersForEncoding = (qw(
+  UTF-8        :utf8
+  US-ASCII) => ''
+);
 
 #=====================================================================
 # Subroutines:
@@ -67,6 +72,7 @@ sub update_menus
 
     $masterMenu = 0;
     $menuMark = '*';
+    $layers = '';
 
     undef $node;        # We are not in any node yet
     undef $level;       undef %next;
@@ -183,7 +189,8 @@ sub readStructure
 
     my $handle   = IO::File->new;
 
-    open($handle,'<', $filename) or abort($filename,0,"Unable to open");
+  openFile:
+    open($handle, "<$layers", $filename) or abort($filename,0,"Unable to open");
 
   line:
     while (<$handle>) {
@@ -273,6 +280,22 @@ EOT
         elsif (/^ *\@include +(\S+)\s/) {
             readStructure($1);
         }
+        elsif (/^ *\@documentencoding +(\S+)\s/) {
+            my $wantLayers = $layersForEncoding{$1};
+            $wantLayers = ":encoding($1)" unless defined $wantLayers;
+
+            if ($layers) {
+              abort($filename, -1, "Cannot switch from $layers to $wantLayers")
+                  if $layers ne $wantLayers;
+            } elsif ($wantLayers) {
+              abort($filename, -1,
+                    '@documentencoding must come before structuring commands')
+                  if defined $node;
+              $layers = $wantLayers;
+              close $handle;
+              goto openFile;
+            }
+        }
     } # end while
 
     close $handle;
@@ -308,8 +331,8 @@ sub writeMenus
     my $inHandle  = IO::File->new;
     my $outHandle = IO::File->new;
 
-    open($inHandle, '<', "$filename#~") or die "Unable to open $filename#~";
-    open($outHandle,'>', $filename)     or die "Unable to open $filename";
+    open($inHandle,"<$layers","$filename#~") or die "Unable to open $filename#~";
+    open($outHandle,">$layers",$filename)    or die "Unable to open $filename";
 
     my $oldHandle = select $outHandle;
 
@@ -431,19 +454,19 @@ This comment (if present) must come B<after> the structuring command.
 B<update_menus> normally adds comments to the master menu to retain the
 descriptions of subsection and lesser nodes.  (This is useful when the
 subfiles are automatically generated and the descriptions are added by
-hand.)  Use C<<comments => 0>> to prevent this.
+hand.)  Use C<< comments => 0 >> to prevent this.
 
 =item B<detailed>
 
 Normally, B<update_menus> generates a detailed node listing (consisting of
 the section nodes for each chapter) following the master menu.  Use
-C<<detailed => 0>> to omit the detailed node listing.
+C<< detailed => 0 >> to omit the detailed node listing.
 
 =item B<verbose>
 
 The B<verbose> option causes B<update_menus> to generate a warning
 message if it finds multiple descriptions for a node (only one of
-which will be used).  Use C<<verbose => 1>> to enable this.
+which will be used).  Use C<< verbose => 1 >> to enable this.
 
 =back
 
