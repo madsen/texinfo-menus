@@ -1,6 +1,6 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
-@c $Id: simple.texi 1577 2006-10-31 20:25:39Z cjm $
+@c simple.texi
 @setfilename simple.info
 @settitle Simple Test
 @c %**end of header

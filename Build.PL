@@ -1,9 +1,8 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id$
-# Copyright 2006 Christopher J. Madsen
-#
 # Build.PL for Texinfo-Menus
+#
+# Copyright 2010 Christopher J. Madsen
 #---------------------------------------------------------------------
 
 use strict;
@@ -11,26 +10,18 @@ use strict;
 use FindBin;
 use lib $FindBin::Bin; # Make sure we're using My_Build from our distribution
 
-use My_Build;          # Our customized version of Module::Build
+use inc::My_Build;     # Our customized version of Module::Build
 
-my $builder = My_Build->new(
+my $builder = inc::My_Build->new(
   module_name        => 'Texinfo::Menus',
   license            => 'perl',
   dist_author        => 'Christopher J. Madsen <perl@cjmweb.net>',
   dist_version_from  => 'lib/Texinfo/Menus.pm',
-  requires => {
-       perl            => '5.6.0',
-  },
-  build_requires => {
-       FindBin         => 0,
-       'Module::Build' => 0,
-       'Test::More'    => 0,
-  },
   dynamic_config     => 1,      # We have the --no-scripts option
   get_options        => { 'no-scripts' => undef },
   add_to_cleanup     => [ 't/testing' ],
-  create_makefile_pl => 'passthrough',
-  meta_merge         => { no_index => { file => ['My_Build.pm'] }},
+  # Prerequisites inserted by DistZilla:
+##{ $plugin->get_prereqs ##}
 );
 
 my @scripts;

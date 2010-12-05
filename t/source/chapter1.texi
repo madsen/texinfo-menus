@@ -1,4 +1,4 @@
-@c $Id$
+@c chapter1.texi
 
 @node Overview
 @chapter Overview

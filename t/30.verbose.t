@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id$
+# 30.verbose.t
 #
 # Copyright 2006 Christopher J. Madsen
 #

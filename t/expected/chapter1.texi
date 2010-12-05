@@ -1,4 +1,4 @@
-@c $Id: chapter1.texi 1580 2006-10-31 22:54:08Z cjm $
+@c chapter1.texi
 
 @node Overview, Data Structures, Top, Top
 @chapter Overview

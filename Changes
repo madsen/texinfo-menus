@@ -1,5 +1,9 @@
 Revision history for Texinfo::Menus
 
+1.02   NOT
+	- Handle @documentencoding (so menus line up properly in UTF-8)
+	- Require Perl 5.8.0
+
 1.01   9 Jun 2007
         - added Pod coverage test
         - updated my email address

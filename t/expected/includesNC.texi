@@ -1,6 +1,6 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
-@c $Id: includes.texi 1580 2006-10-31 22:54:08Z cjm $
+@c includes.texi
 @setfilename includes.info
 @settitle Includes Test
 @c %**end of header

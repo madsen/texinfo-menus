@@ -1,12 +1,13 @@
-bin/up_menus
 Build.PL
 Changes
-lib/Texinfo/Menus.pm
-Makefile.PL
+LICENSE
 MANIFEST
-META.yml			# Will be created by "make dist"
-My_Build.pm
+META.json
+META.yml
 README
+bin/up_menus
+inc/My_Build.pm
+lib/Texinfo/Menus.pm
 t/00.load.t
 t/10.simple.t
 t/20.includes.t
@@ -19,9 +20,9 @@ t/expected/includesNC.texi
 t/expected/section22.texi
 t/expected/simple.texi
 t/expected/simpleND.texi
-t/perlcritic.t
-t/pod-coverage.t
-t/pod.t
+t/release-perlcritic.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
 t/source/chapter1.texi
 t/source/chapter2.texi
 t/source/chapter3-4.texi

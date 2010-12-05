@@ -1,6 +1,6 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
-@c $Id$
+@c includes.texi
 @setfilename includes.info
 @settitle Includes Test
 @c %**end of header

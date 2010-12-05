@@ -17,4 +17,6 @@
 ^Texinfo-Menus-\d
 ^_build\b
 ^Build$
+^dist\.ini$
 ^t/testing/
+^tools/loom\.pl

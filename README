@@ -1,5 +1,4 @@
-$$Id$
-Texinfo-Menus version $%v%$
+Texinfo-Menus version {{$version}}, released {{$date}}
 
 Texinfo::Menus updates the menus and node links in a Texinfo file
 based on its chapter structure. The file may use `@include' to include
@@ -13,21 +12,27 @@ INSTALLATION
 
 To install this module, run the following commands:
 
-    perl Build.PL
-    ./Build
-    ./Build test
-    ./Build install
+{{ $t->build_instructions('    ') }}
+
+Pass the --no-scripts option to Build.PL if you don't want to install
+the up_menus script.
 
 
 
 DEPENDENCIES
 
-None.
+{{ $t->dependency_list }}
 
 
-COPYRIGHT AND LICENCE
 
-Copyright 2007 Christopher J. Madsen
+CHANGES
+    Here's what's new in version {{$version}} of Texinfo::Menus:
+    (See the file "Changes" for the full revision history.)
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+{{$changes}}
+
+
+
+COPYRIGHT AND LICENSE
+
+{{ local $_ = $zilla->license->notice; chomp; $_ }}

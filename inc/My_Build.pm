@@ -1,6 +1,5 @@
 #---------------------------------------------------------------------
-# $Id$
-package My_Build;
+package inc::My_Build;
 #
 # Copyright 2007 Christopher J. Madsen
 #
@@ -28,10 +27,9 @@ use base 'Module::Build';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 #=====================================================================
-
 sub find_perl_interpreter
 {
   my $self = shift @_;
@@ -47,37 +45,6 @@ sub find_perl_interpreter
 
   return $perl;
 } # end find_perl_interpreter
-
-#---------------------------------------------------------------------
-sub ACTION_distdir
-{
-  my $self = shift @_;
-
-  $self->SUPER::ACTION_distdir(@_);
-
-  # Process README, inserting version number & removing comments:
-
-  my $out = File::Spec->catfile($self->dist_dir, 'README');
-  my @stat = stat($out) or die;
-
-  unlink $out or die;
-
-  open(IN,  '<', 'README') or die;
-  open(OUT, '>', $out)     or die;
-
-  while (<IN>) {
-    next if /^\$\$/;            # $$ indicates comment
-    s/\$\%v\%\$/ $self->dist_version /ge;
-
-    print OUT $_;
-  } # end while IN
-
-  close IN;
-  close OUT;
-
-  utime @stat[8,9], $out;       # Restore modification times
-  chmod $stat[2],   $out;       # Restore access permissions
-} # end ACTION_distdir
 
 #=====================================================================
 # Package Return Value:

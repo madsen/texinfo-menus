@@ -1,4 +1,4 @@
-@c $Id: chapter3-4.texi 1580 2006-10-31 22:54:08Z cjm $
+@c chapter3-4.texi
 
 @node Syntax, Chapter 4, Data Structures, Top
 @chapter Syntax

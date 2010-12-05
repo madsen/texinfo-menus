@@ -1,0 +1,12 @@
+/blib/
+/META.yml
+/MYMETA.yml
+/.build/
+/_build/
+Build
+Makefile
+/pm_to_blib
+Texinfo-Menus-*.tar.gz
+Texinfo-Menus-*/
+/t/testing/
+/test-results/

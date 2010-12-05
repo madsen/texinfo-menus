@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id$
+# up_menus
 # Copyright 1994-2007 Christopher J. Madsen
 #
 # Update menus and node structure in Texinfo files

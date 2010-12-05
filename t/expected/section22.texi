@@ -1,4 +1,4 @@
-@c $Id: section22.texi 1580 2006-10-31 22:54:08Z cjm $
+@c section22.texi
 
 @node Scalar Context, List Context, Context, Context
 @c DESC: Comments between @node & @section get ignored

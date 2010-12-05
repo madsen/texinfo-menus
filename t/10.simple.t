@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id$
+# 10.simple.t
 #
 # Copyright 2006 Christopher J. Madsen
 #

@@ -1,4 +1,4 @@
-@c $Id$
+@c chapter2.texi
 
 @node Data Structures
 @chapter Data Structures
