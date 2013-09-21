@@ -20,19 +20,19 @@ use 5.008;
 
 use IO::File;
 use strict;
-use vars qw(
-    $descColumn $layers $level $masterMenu $menuMark $node $printKids $section
-    $No_Comments $No_Detail $Verbose $VERSION
-    @parents @ISA @EXPORT
-    %children %desc %level %next %prev %section %title %up
+our (
+    $descColumn,$layers,$level,$masterMenu,$menuMark,$node,$printKids,$section,
+    $No_Comments,$No_Detail,$Verbose,
+    @parents,
+    %children,%desc,%level,%next,%prev,%section,%title,%up,
 );
 
 require Exporter;
 
-@ISA = qw(Exporter);
-@EXPORT = qw(update_menus);
+our @ISA = qw(Exporter);
+our @EXPORT = qw(update_menus);
 
-$VERSION = '1.02';
+our $VERSION = '1.03';
 
 our %layersForEncoding = (qw(
   UTF-8        :utf8
