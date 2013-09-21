@@ -17,17 +17,18 @@ package inc::My_Build;
 # Customize Module::Build to improve find_perl_interpreter
 #---------------------------------------------------------------------
 
-require 5.006;
+require 5.008;
 use strict;
 use Cwd 'abs_path';
 use File::Spec ();
 
-use base 'Module::Build';
+use Module::Build ();
+our @ISA = qw(Module::Build);
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 #=====================================================================
 sub find_perl_interpreter
