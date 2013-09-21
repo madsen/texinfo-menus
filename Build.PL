@@ -12,7 +12,7 @@ use lib $FindBin::Bin; # Make sure we're using My_Build from our distribution
 
 use inc::My_Build;     # Our customized version of Module::Build
 
-my $builder = inc::My_Build->new(
+my %module_build_args = (
   module_name        => 'Texinfo::Menus',
   license            => 'perl',
   dist_author        => 'Christopher J. Madsen <perl@cjmweb.net>',
@@ -21,8 +21,23 @@ my $builder = inc::My_Build->new(
   get_options        => { 'no-scripts' => undef },
   add_to_cleanup     => [ 't/testing' ],
   # Prerequisites inserted by DistZilla:
-##{ $plugin->get_prereqs ##}
+##{ $plugin->get_prereqs(1) ##}
 );
+
+unless ( eval { Module::Build->VERSION(0.4004) } ) {
+  my $tr = delete $module_build_args{test_requires};
+  my $br = $module_build_args{build_requires};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
+
+my $builder = inc::My_Build->new(%module_build_args);
 
 my @scripts;
 
