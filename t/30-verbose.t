@@ -17,14 +17,16 @@
 
 use Config;
 use FindBin '$Bin';
-use Test::More;
+use Test::More 0.88;            # done_testing
 
 BEGIN {
   plan skip_all => "Perl was not compiled with PerlIO" unless $Config{useperlio};
 
+  # RECOMMEND PREREQ: File::Copy
   eval "use File::Copy";
   plan skip_all => "File::Copy required for testing" if $@;
 
+  # RECOMMEND PREREQ: Test::File::Contents 0.03
   eval "use Test::File::Contents 0.03";
   plan skip_all => "Test::File::Contents 0.03 required for testing" if $@;
 
@@ -72,3 +74,5 @@ chapter2.texi:35: Warning: Multiple descriptions for node `Scalar values'
 foreach my $file ('includes.texi', @subfiles) {
   file_contents_identical($file, "$goodDir/$file", $file);
 }
+
+done_testing;

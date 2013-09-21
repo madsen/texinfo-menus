@@ -16,12 +16,14 @@
 #---------------------------------------------------------------------
 
 use FindBin '$Bin';
-use Test::More;
+use Test::More 0.88;            # done_testing
 
 BEGIN {
+  # RECOMMEND PREREQ: File::Copy
   eval "use File::Copy";
   plan skip_all => "File::Copy required for testing" if $@;
 
+  # RECOMMEND PREREQ: Test::File::Contents 0.03
   eval "use Test::File::Contents 0.03";
   plan skip_all => "Test::File::Contents 0.03 required for testing" if $@;
 
@@ -64,3 +66,5 @@ copy("$sourceDir/includes.texi", "$testDir/includesNC.texi")
     or die "Unable to copy $sourceDir/includes.texi to $testDir/includesNC.texi";
 
 run_tests('includesNC.texi', 'using comments => 0', comments => 0);
+
+done_testing;
