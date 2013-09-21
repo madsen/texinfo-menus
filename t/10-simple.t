@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# 20.includes.t
+# 10-simple.t
 #
 # Copyright 2006 Christopher J. Madsen
 #
@@ -12,7 +12,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Test @include files with Texinfo::Menus
+# Simple tests for Texinfo::Menus
 #---------------------------------------------------------------------
 
 use FindBin '$Bin';
@@ -25,7 +25,7 @@ BEGIN {
   eval "use Test::File::Contents 0.03";
   plan skip_all => "Test::File::Contents 0.03 required for testing" if $@;
 
-  plan tests => 11;
+  plan tests => 3;
   use_ok('Texinfo::Menus');
 }
 
@@ -38,29 +38,16 @@ mkdir $testDir or die "Unable to create $testDir directory" unless -d $testDir;
 chdir $testDir or die "Unable to cd $testDir";
 
 #---------------------------------------------------------------------
-my @subfiles = qw(chapter1.texi chapter2.texi chapter3-4.texi section22.texi);
+copy("$sourceDir/simple.texi", $testDir)
+    or die "Unable to copy $sourceDir/simple.texi to $testDir";
 
-sub run_tests
-{
-  my ($fn, $desc, @parms) = @_;
-
-  update_menus($fn, @parms);
-
-  foreach my $file ($fn, @subfiles) {
-    file_contents_identical($file, "$goodDir/$file", "$file $desc");
-  }
-} # end run_tests
+update_menus('simple.texi');
+file_contents_identical('simple.texi', "$goodDir/simple.texi", 'using defaults');
 
 #---------------------------------------------------------------------
-foreach ('includes.texi', @subfiles) {
-  copy("$sourceDir/$_", $testDir)
-    or die "Unable to copy $sourceDir/$_ to $testDir";
-}
+copy("$sourceDir/simple.texi", "$testDir/simpleND.texi")
+    or die "Unable to copy $sourceDir/simple.texi to $testDir/simpleND.texi";
 
-run_tests('includes.texi', 'using defaults');
-
-#---------------------------------------------------------------------
-copy("$sourceDir/includes.texi", "$testDir/includesNC.texi")
-    or die "Unable to copy $sourceDir/includes.texi to $testDir/includesNC.texi";
-
-run_tests('includesNC.texi', 'using comments => 0', comments => 0);
+update_menus('simpleND.texi', detailed => 0);
+file_contents_identical('simpleND.texi', "$goodDir/simpleND.texi",
+                        'using detailed => 0');

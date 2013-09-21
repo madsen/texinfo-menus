@@ -1,8 +1,8 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# 40.unicode.t
+# 30-verbose.t
 #
-# Copyright 2010 Christopher J. Madsen
+# Copyright 2006 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -12,20 +12,23 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Unicode tests for Texinfo::Menus
+# Test the 'verbose' option of Texinfo::Menus
 #---------------------------------------------------------------------
 
+use Config;
 use FindBin '$Bin';
 use Test::More;
 
 BEGIN {
+  plan skip_all => "Perl was not compiled with PerlIO" unless $Config{useperlio};
+
   eval "use File::Copy";
   plan skip_all => "File::Copy required for testing" if $@;
 
   eval "use Test::File::Contents 0.03";
   plan skip_all => "Test::File::Contents 0.03 required for testing" if $@;
 
-  plan tests => 3;
+  plan tests => 7;
   use_ok('Texinfo::Menus');
 }
 
@@ -38,17 +41,34 @@ mkdir $testDir or die "Unable to create $testDir directory" unless -d $testDir;
 chdir $testDir or die "Unable to cd $testDir";
 
 #---------------------------------------------------------------------
-copy("$sourceDir/unicode.texi", $testDir)
-    or die "Unable to copy $sourceDir/unicode.texi to $testDir";
-
-update_menus('unicode.texi');
-file_contents_identical('unicode.texi', "$goodDir/unicode.texi",
-                        'using defaults');
+my @subfiles = qw(chapter1.texi chapter2.texi chapter3-4.texi section22.texi);
 
 #---------------------------------------------------------------------
-copy("$sourceDir/unicode.texi", "$testDir/unicodeND.texi")
-    or die "Unable to copy $sourceDir/unicode.texi to $testDir/unicodeND.texi";
+foreach ('includes.texi', @subfiles) {
+  copy("$sourceDir/$_", $testDir)
+    or die "Unable to copy $sourceDir/$_ to $testDir";
+}
 
-update_menus('unicodeND.texi', detailed => 0);
-file_contents_identical('unicodeND.texi', "$goodDir/unicodeND.texi",
-                        'using detailed => 0');
+my $errors = '';
+
+open(OLDERR, '>&STDERR');
+close STDERR;
+open(STDERR, '>', \$errors) or die "Unable to reopen STDERR";
+
+update_menus('includes.texi', verbose => 1);
+
+close STDERR;
+open(STDERR, '>&OLDERR');
+close OLDERR;
+
+is($errors, <<'', 'Warning messages');
+chapter2.texi:9: Warning: Multiple descriptions for node `Variable names'
+    `This came from the Top menu' overrides
+    `This gets overridden by the Top menu'
+chapter2.texi:35: Warning: Multiple descriptions for node `Scalar values'
+    `Scalar values DESC comment' overrides
+    `This is overridden by a DESC comment'
+
+foreach my $file ('includes.texi', @subfiles) {
+  file_contents_identical($file, "$goodDir/$file", $file);
+}

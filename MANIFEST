@@ -8,11 +8,12 @@ README
 bin/up_menus
 inc/My_Build.pm
 lib/Texinfo/Menus.pm
-t/00.load.t
-t/10.simple.t
-t/20.includes.t
-t/30.verbose.t
-t/40.unicode.t
+t/00-all_prereqs.t
+t/00-load.t
+t/10-simple.t
+t/20-includes.t
+t/30-verbose.t
+t/40-unicode.t
 t/expected/chapter1.texi
 t/expected/chapter2.texi
 t/expected/chapter3-4.texi

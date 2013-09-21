@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# 30.verbose.t
+# 20-includes.t
 #
 # Copyright 2006 Christopher J. Madsen
 #
@@ -12,23 +12,20 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Test the 'verbose' option of Texinfo::Menus
+# Test @include files with Texinfo::Menus
 #---------------------------------------------------------------------
 
-use Config;
 use FindBin '$Bin';
 use Test::More;
 
 BEGIN {
-  plan skip_all => "Perl was not compiled with PerlIO" unless $Config{useperlio};
-
   eval "use File::Copy";
   plan skip_all => "File::Copy required for testing" if $@;
 
   eval "use Test::File::Contents 0.03";
   plan skip_all => "Test::File::Contents 0.03 required for testing" if $@;
 
-  plan tests => 7;
+  plan tests => 11;
   use_ok('Texinfo::Menus');
 }
 
@@ -43,32 +40,27 @@ chdir $testDir or die "Unable to cd $testDir";
 #---------------------------------------------------------------------
 my @subfiles = qw(chapter1.texi chapter2.texi chapter3-4.texi section22.texi);
 
+sub run_tests
+{
+  my ($fn, $desc, @parms) = @_;
+
+  update_menus($fn, @parms);
+
+  foreach my $file ($fn, @subfiles) {
+    file_contents_identical($file, "$goodDir/$file", "$file $desc");
+  }
+} # end run_tests
+
 #---------------------------------------------------------------------
 foreach ('includes.texi', @subfiles) {
   copy("$sourceDir/$_", $testDir)
     or die "Unable to copy $sourceDir/$_ to $testDir";
 }
 
-my $errors = '';
+run_tests('includes.texi', 'using defaults');
 
-open(OLDERR, '>&STDERR');
-close STDERR;
-open(STDERR, '>', \$errors) or die "Unable to reopen STDERR";
+#---------------------------------------------------------------------
+copy("$sourceDir/includes.texi", "$testDir/includesNC.texi")
+    or die "Unable to copy $sourceDir/includes.texi to $testDir/includesNC.texi";
 
-update_menus('includes.texi', verbose => 1);
-
-close STDERR;
-open(STDERR, '>&OLDERR');
-close OLDERR;
-
-is($errors, <<'', 'Warning messages');
-chapter2.texi:9: Warning: Multiple descriptions for node `Variable names'
-    `This came from the Top menu' overrides
-    `This gets overridden by the Top menu'
-chapter2.texi:35: Warning: Multiple descriptions for node `Scalar values'
-    `Scalar values DESC comment' overrides
-    `This is overridden by a DESC comment'
-
-foreach my $file ('includes.texi', @subfiles) {
-  file_contents_identical($file, "$goodDir/$file", $file);
-}
+run_tests('includesNC.texi', 'using comments => 0', comments => 0);

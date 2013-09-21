@@ -1,8 +1,8 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# 10.simple.t
+# 40-unicode.t
 #
-# Copyright 2006 Christopher J. Madsen
+# Copyright 2010 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -12,7 +12,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Simple tests for Texinfo::Menus
+# Unicode tests for Texinfo::Menus
 #---------------------------------------------------------------------
 
 use FindBin '$Bin';
@@ -38,16 +38,17 @@ mkdir $testDir or die "Unable to create $testDir directory" unless -d $testDir;
 chdir $testDir or die "Unable to cd $testDir";
 
 #---------------------------------------------------------------------
-copy("$sourceDir/simple.texi", $testDir)
-    or die "Unable to copy $sourceDir/simple.texi to $testDir";
+copy("$sourceDir/unicode.texi", $testDir)
+    or die "Unable to copy $sourceDir/unicode.texi to $testDir";
 
-update_menus('simple.texi');
-file_contents_identical('simple.texi', "$goodDir/simple.texi", 'using defaults');
+update_menus('unicode.texi');
+file_contents_identical('unicode.texi', "$goodDir/unicode.texi",
+                        'using defaults');
 
 #---------------------------------------------------------------------
-copy("$sourceDir/simple.texi", "$testDir/simpleND.texi")
-    or die "Unable to copy $sourceDir/simple.texi to $testDir/simpleND.texi";
+copy("$sourceDir/unicode.texi", "$testDir/unicodeND.texi")
+    or die "Unable to copy $sourceDir/unicode.texi to $testDir/unicodeND.texi";
 
-update_menus('simpleND.texi', detailed => 0);
-file_contents_identical('simpleND.texi', "$goodDir/simpleND.texi",
+update_menus('unicodeND.texi', detailed => 0);
+file_contents_identical('unicodeND.texi', "$goodDir/unicodeND.texi",
                         'using detailed => 0');
