@@ -1,6 +1,6 @@
 Revision history for Texinfo::Menus
 
-1.03   NOT
+1.03   2013-09-28
 	- use 'our' instead of 'use vars'
 
 1.02   2010-12-07
